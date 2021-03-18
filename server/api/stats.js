@@ -1,6 +1,7 @@
 const router = require('express').Router()
-// const { Player, Season, Statistic } = require('../index')
-const Season = require('../db/models/season')
+const { Player, Season, Statistic } = require('../db/models')
+// const Season = require('../db/models/season')
+
 router.get('/:year', async (req, res, next) => {
 	try {
 		console.log('season > ', Season)

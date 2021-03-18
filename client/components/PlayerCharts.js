@@ -10,8 +10,8 @@ const PlayerCharts = ({
 	data,
 	player,
 	showCharts,
-	setShowCharts,
-	setCharts,
+	setChart,
+	toggleShowChart,
 }) => {
 	const [heights, setHeight] = useState('2400px')
 	const stats = [
@@ -30,7 +30,7 @@ const PlayerCharts = ({
 		// Handler to call on window resize
 		function handleResize() {
 			if (window.innerWidth < 825) setHeight('2400px')
-			else if (window.innerWidth > 1175) setHeight('850px')
+			else if (window.innerWidth > 1275) setHeight('850px')
 			else setHeight('1400px')
 		}
 
@@ -43,7 +43,8 @@ const PlayerCharts = ({
 
 	const clearActive = () => {
 		if (!showCharts) {
-			setCharts(null)
+			// setCharts(null)
+			setChart(null)
 		}
 	}
 
@@ -80,7 +81,8 @@ const PlayerCharts = ({
 		<Container
 			className="script-box"
 			style={props}
-			onClick={() => setShowCharts(!showCharts)}
+			// onClick={() => setShowCharts(!showCharts)}
+			onClick={() => toggleShowChart()}
 		>
 			{transitions.map(({ item, key, props }) => (
 				<Item key={key} style={{ ...props, background: item.css }}>

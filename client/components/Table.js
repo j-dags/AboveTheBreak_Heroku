@@ -9,61 +9,85 @@ import axios from 'axios'
 // const db = firebaseApp.firestore()
 
 const Table = () => {
-	let [charts, setCharts] = useState(null)
-	let [filter, setFilter] = useState('NBA_FANTASY_PTS_RANK')
-	let [loaded, setLoaded] = useState(false)
-	let [order, setOrder] = useState([])
-	let [readyToClose, setClose] = useState(false)
-	let [reverse, setReverse] = useState(false)
-	let [showCharts, setShowCharts] = useState(false)
-	let [year, setYear] = useState('2020-21')
+	const [state, setState] = useState({
+		charts: null,
+		filter: 'NBA_FANTASY_PTS_RANK',
+		loaded: false,
+		order: [],
+		reverse: false,
+		showCharts: false,
+		year: '2020-21',
+	})
+
 	let i = 0
 	let color = '#f6f6f6'
 
 	useEffect(() => {
 		const getPlayerData = async () => {
-			let { data } = await axios.get(`/api/stats/${year}`)
-			setOrder(data)
-			setLoaded(true)
+			let { data } = await axios.get(`/api/stats/${state.year}`)
+			// setOrder(data)
+			// setState({ ...state, loaded: true })
+			setState({ ...state, order: data, loaded: true })
+			// setLoaded(true)
 		}
 
 		getPlayerData()
-	}, [year])
+	}, [state.year])
 
 	const handleClick = (evt) => {
-		if (!charts) setCharts(evt.target.dataset.value)
-		setShowCharts(!showCharts)
+		// if (!charts) setCharts(evt.target.dataset.value)
+		// setShowCharts(!showCharts)
+		if (!state.charts)
+			setState({
+				...state,
+				charts: evt.target.dataset.value,
+				showCharts: !state.showCharts,
+			})
+		else setState({ ...state, showCharts: !state.showCharts })
+	}
+
+	const setChart = (value = !state.charts) => {
+		setState({ ...state, charts: value })
+	}
+
+	const toggleShowChart = (value = !state.showCharts) => {
+		setState({ ...state, showCharts: value })
 	}
 
 	// Set new player order sorted depending on column clicked
 	const handleFilter = (evt) => {
 		const newFilter = evt.target.getAttribute('name')
 		let newReverse = false
-		if (newFilter === filter) {
-			newReverse = !reverse
+		if (newFilter === state.filter) {
+			newReverse = !state.reverse
 		}
 
-		setOrder(filterFnc(newFilter, newReverse))
-		setFilter(newFilter)
-		setReverse(newReverse)
+		setState({
+			...state,
+			order: filterFnc(newFilter, newReverse),
+			filter: newFilter,
+			reverse: newReverse,
+		})
+		// setOrder(filterFnc(newFilter, newReverse))
+		// setFilter(newFilter)
+		// setReverse(newReverse)
 	}
 
 	// Return order array sorted depending on column clicked
 	const filterFnc = (filter, reverse) => {
-		console.log(filter, !!/RANK/.test(filter))
 		// Sort strings
 		if (filter === 'PLAYER_NAME' || filter === 'TEAM_ABBREVIATION') {
-			return [...order].sort(
+			return [...state.order].sort(
 				(a, b) => a[filter].localeCompare(b[filter]) * (reverse ? -1 : 1)
 			)
 		}
 		// Sort numbers
 		else if (!!/RANK/.test(filter) && filter !== 'TOV_RANK') {
-			return [...order].sort(
+			return [...state.order].sort(
 				(a, b) => (reverse ? 1 : -1) * (b[filter] - a[filter])
 			)
 		} else {
-			return [...order].sort(
+			return [...state.order].sort(
 				(a, b) => (reverse ? -1 : 1) * (b[filter] - a[filter])
 			)
 		}
@@ -78,7 +102,7 @@ const Table = () => {
 	}
 
 	return (
-		loaded && (
+		state.loaded && (
 			// <div>HOL UP</div>
 			<div id="table-body">
 				<div className="h1-container">
@@ -86,9 +110,9 @@ const Table = () => {
 					<select
 						name="Decimal"
 						className="ui fluid dropdown"
-						onChange={(e) => setYear(e.target.value)}
+						onChange={(e) => setState({ ...state, year: e.target.value })}
 						type="number"
-						value={year}
+						value={state.year}
 					>
 						<option key={0} value={'2020-21'}>
 							2020-21
@@ -117,7 +141,7 @@ const Table = () => {
 								<th
 									key={stat.text}
 									className={
-										filter === stat.name
+										state.filter === stat.name
 											? stat.className + '-active'
 											: stat.className
 									}
@@ -127,86 +151,90 @@ const Table = () => {
 								</th>
 							))}
 						</tr>
-						{order.map((player) => {
+						{state.order.map((player) => {
 							i++
 							return (
 								<React.Fragment key={i}>
 									<tr onClick={handleClick} className="table-row">
 										<td
 											className="row-rank"
-											bgcolor={filter === 'NBA_FANTASY_PTS_RANK' ? color : null}
+											bgcolor={
+												state.filter === 'NBA_FANTASY_PTS_RANK' ? color : null
+											}
 										>
 											{player.NBA_FANTASY_PTS_RANK}
 										</td>
 										<td
-											bgcolor={filter === 'PLAYER_NAME' ? color : null}
+											bgcolor={state.filter === 'PLAYER_NAME' ? color : null}
 											className="row-name"
 											data-value={player.PLAYER_NAME}
 										>
 											{player.PLAYER_NAME}
 										</td>
 										<td
-											bgcolor={filter === 'TEAM_ABBREVIATION' ? color : null}
+											bgcolor={
+												state.filter === 'TEAM_ABBREVIATION' ? color : null
+											}
 											className="row-team"
 										>
 											{player.TEAM_ABBREVIATION}
 										</td>
 										<td
-											bgcolor={filter === 'GP' ? color : null}
+											bgcolor={state.filter === 'GP' ? color : null}
 											className="row-team"
 										>
 											{player.GP}
 										</td>
 										<td
-											bgcolor={filter === 'FG3M' ? color : null}
+											bgcolor={state.filter === 'FG3M' ? color : null}
 											className="row-stat"
 										>
 											{player.FG3M.toFixed(1)}
 										</td>
 										<td
-											bgcolor={filter === 'PTS' ? color : null}
+											bgcolor={state.filter === 'PTS' ? color : null}
 											className="row-stat"
 										>
 											{player.PTS.toFixed(1)}
 										</td>
 										<td
-											bgcolor={filter === 'REB' ? color : null}
+											bgcolor={state.filter === 'REB' ? color : null}
 											className="row-stat"
 										>
 											{player.REB.toFixed(1)}
 										</td>
 										<td
-											bgcolor={filter === 'AST' ? color : null}
+											bgcolor={state.filter === 'AST' ? color : null}
 											className="row-stat"
 										>
 											{player.AST.toFixed(1)}
 										</td>
 										<td
-											bgcolor={filter === 'STL' ? color : null}
+											bgcolor={state.filter === 'STL' ? color : null}
 											className="row-stat"
 										>
 											{player.STL.toFixed(1)}
 										</td>
 										<td
-											bgcolor={filter === 'BLK' ? color : null}
+											bgcolor={state.filter === 'BLK' ? color : null}
 											className="row-stat"
 										>
 											{player.BLK.toFixed(1)}
 										</td>
 										<td
-											bgcolor={filter === 'FG_PCT' ? color : null}
+											bgcolor={state.filter === 'FG_PCT' ? color : null}
 											className="row-stat"
 										>
 											{player.FG_PCT.toFixed(2)}
 										</td>
 										<td
-											bgcolor={filter === 'FT_PCT' ? color : null}
+											bgcolor={state.filter === 'FT_PCT' ? color : null}
 											className="row-stat"
 										>
 											{player.FT_PCT.toFixed(2)}
 										</td>
 										<td
-											bgcolor={filter === 'TOV' ? color : null}
+											bgcolor={state.filter === 'TOV' ? color : null}
 											className="row-stat"
 										>
 											{player.TOV.toFixed()}
@@ -266,19 +294,21 @@ const Table = () => {
 											{player.TOV_RANK}
 										</td>
 									</tr>
-									{charts === player.PLAYER_NAME && (
+									{state.charts === player.PLAYER_NAME && (
 										<tr key={player.PTS} className="player-charts-row">
 											<td colSpan="22">
-												{/* <div className="active"> */}
 												<PlayerCharts
-													data={order}
+													data={state.order}
 													player={player}
-													setCharts={setCharts}
-													setClose={setClose}
-													setShowCharts={setShowCharts}
-													showCharts={showCharts}
+													// setCharts={setCharts}
+													// setClose={setClose}
+													// setShowCharts={setShowCharts}
+													showCharts={state.showCharts}
+													setChart={setChart}
+													toggleShowChart={toggleShowChart}
+													// state={state}
+													// setState={setState}
 												/>
-												{/* </div> */}
 											</td>
 										</tr>
 									)}

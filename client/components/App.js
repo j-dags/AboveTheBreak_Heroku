@@ -3,7 +3,7 @@ import { Route, Switch, BrowserRouter as Router } from 'react-router-dom'
 import Table from './Table'
 import Navbar from './Navbar'
 import LeagueCharts from './LeagueCharts'
-import './App.css'
+import './Nap.css'
 
 function App() {
 	return (

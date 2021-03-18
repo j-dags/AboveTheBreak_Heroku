@@ -5,12 +5,10 @@ import PlayerCharts from './PlayerCharts'
 import { headerData } from './rowData'
 import { rgb } from 'd3'
 import axios from 'axios'
-// import firebaseApp from '../firebase'
-// const db = firebaseApp.firestore()
 
 const Table = () => {
 	const [state, setState] = useState({
-		charts: null,
+		selectedPlayer: null,
 		filter: 'NBA_FANTASY_PTS_RANK',
 		loaded: false,
 		order: [],
@@ -25,10 +23,7 @@ const Table = () => {
 	useEffect(() => {
 		const getPlayerData = async () => {
 			let { data } = await axios.get(`/api/stats/${state.year}`)
-			// setOrder(data)
-			// setState({ ...state, loaded: true })
 			setState({ ...state, order: data, loaded: true })
-			// setLoaded(true)
 		}
 
 		getPlayerData()
@@ -37,17 +32,17 @@ const Table = () => {
 	const handleClick = (evt) => {
 		// if (!charts) setCharts(evt.target.dataset.value)
 		// setShowCharts(!showCharts)
-		if (!state.charts)
+		if (!state.selectedPlayer)
 			setState({
 				...state,
-				charts: evt.target.dataset.value,
+				selectedPlayer: evt.target.dataset.value,
 				showCharts: !state.showCharts,
 			})
 		else setState({ ...state, showCharts: !state.showCharts })
 	}
 
-	const setChart = (value = !state.charts) => {
-		setState({ ...state, charts: value })
+	const setSelectedPlayer = (value = !state.selectedPlayer) => {
+		setState({ ...state, selectedPlayer: value })
 	}
 
 	const toggleShowChart = (value = !state.showCharts) => {
@@ -294,20 +289,15 @@ const Table = () => {
 											{player.TOV_RANK}
 										</td>
 									</tr>
-									{state.charts === player.PLAYER_NAME && (
+									{state.selectedPlayer === player.PLAYER_NAME && (
 										<tr key={player.PTS} className="player-charts-row">
 											<td colSpan="22">
 												<PlayerCharts
 													data={state.order}
 													player={player}
-													// setCharts={setCharts}
-													// setClose={setClose}
-													// setShowCharts={setShowCharts}
 													showCharts={state.showCharts}
-													setChart={setChart}
+													setSelectedPlayer={setSelectedPlayer}
 													toggleShowChart={toggleShowChart}
-													// state={state}
-													// setState={setState}
 												/>
 											</td>
 										</tr>

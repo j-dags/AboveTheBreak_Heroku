@@ -10,7 +10,7 @@ const PlayerCharts = ({
 	data,
 	player,
 	showCharts,
-	setChart,
+	setSelectedPlayer,
 	toggleShowChart,
 }) => {
 	const [heights, setHeight] = useState('2400px')
@@ -28,12 +28,12 @@ const PlayerCharts = ({
 
 	useEffect(() => {
 		// Handler to call on window resize
+
 		function handleResize() {
-			if (window.innerWidth < 825) setHeight('2400px')
-			else if (window.innerWidth > 1275) setHeight('850px')
+			if (window.innerWidth < 875) setHeight('2400px')
+			else if (window.innerWidth > 1225) setHeight('850px')
 			else setHeight('1400px')
 		}
-
 		window.addEventListener('resize', handleResize)
 		handleResize()
 
@@ -43,8 +43,7 @@ const PlayerCharts = ({
 
 	const clearActive = () => {
 		if (!showCharts) {
-			// setCharts(null)
-			setChart(null)
+			setSelectedPlayer(null)
 		}
 	}
 

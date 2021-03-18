@@ -1,34 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import firebaseApp from '../firebase'
 import Histogram from './Histogram'
+import axios from 'axios'
 import './LeagueCharts.css'
-
-const db = firebaseApp.firestore()
 
 const LeagueCharts = () => {
 	const [datas, setData] = useState({})
 	const [year, setYear] = useState('2020-21')
 
 	useEffect(() => {
-		// USE FOR PLAYERSTATS (PREFERRED TABLE) SCRAPED AND STORED IN OUTPUT.JS
 		const getPlayerData = async () => {
-			// Get and parse data from firestore
-			const snapshot = await db.collection(year).get()
-			let arr = []
-			snapshot.forEach((el) => arr.push(el.data()))
-			// Filter and sort player data
-			if (arr.length > 1) {
-				arr = arr
-					.filter((player) => player.NBA_FANTASY_PTS_RANK <= 150)
-					.sort((a, b) => a.NBA_FANTASY_PTS_RANK - b.NBA_FANTASY_PTS_RANK)
-			}
-			// Save to state
-			setData(arr)
+			let { data } = await axios.get(`/api/stats/${year}`)
+			setData(data)
 		}
+
 		getPlayerData()
 	}, [year])
 
-	console.log('datas > ', datas)
 	return (
 		<div id="histogram-body">
 			<div className="histogram-header">

@@ -15,7 +15,7 @@ const defaultBars = {
 }
 
 export default class Histogram extends PureComponent {
-	static jsfiddleUrl = 'https://jsfiddle.net/alidingling/9kd8rssL/'
+	// static jsfiddleUrl = 'https://jsfiddle.net/alidingling/9kd8rssL/'
 	constructor() {
 		super()
 		this.state = { decimals: 4 }

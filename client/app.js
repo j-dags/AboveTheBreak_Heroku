@@ -6,6 +6,7 @@ import NotFound from './components/NotFound'
 import ReactDOM from 'react-dom'
 import store from './store'
 import Table from './components/Table'
+import LeagueCharts from './components/LeagueCharts'
 import Navbar from './components/Navbar'
 
 import './style.css'
@@ -19,8 +20,9 @@ class Main extends Component {
 			<Router>
 				<Navbar />
 				<Switch>
-					<Route exact to="/" component={Table} />
-					<Route exact to="/notfound" component={NotFound} />
+					<Route exact path="/" component={Table} />
+					<Route path="/stat-charts" component={LeagueCharts} />
+					<Route exact path="/notfound" component={NotFound} />
 				</Switch>
 			</Router>
 		)

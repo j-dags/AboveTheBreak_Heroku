@@ -1,0 +1,40 @@
+* {
+	margin: 0;
+	letter-spacing: 0;
+}
+
+h3 {
+	text-align: center;
+	margin: 0.5rem;
+}
+
+.field {
+	text-align: center;
+	margin: 0.5rem;
+}
+
+.histogram-title {
+	display: inline-flex;
+	background-color: #ebebeb;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0.25rem 2rem;
+}
+
+.histogram {
+	border-radius: 5px;
+	display: flex;
+	flex-direction: column;
+	max-width: 100%;
+	position: relative;
+
+	border: none;
+	border-radius: 0.28571429rem;
+	box-shadow: 0 2px 4px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+	transition: box-shadow 0.1s ease, transform 0.1s ease;
+}
+
+select {
+	height: 25px;
+	margin-left: 2rem;
+}

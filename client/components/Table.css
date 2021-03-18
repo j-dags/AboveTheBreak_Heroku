@@ -1,0 +1,169 @@
+.player-charts-row {
+	background-color: #f6f6f6;
+	/* height: 800px;
+	animation: 0.25s 1 forwards cubic-bezier(0.36, -0.01, 0.5, 1.1) grow; */
+}
+
+.inactive {
+	background-color: #f6f6f6;
+	height: 0;
+	padding: 0 10px;
+	opacity: 0;
+	box-sizing: border-box;
+	overflow: hidden;
+	transition: height 0.3s, padding 0.3s, opacity 1s;
+}
+
+.active {
+	/* height: 1100px; */
+	padding: 10px 10px;
+	opacity: 1;
+	transition: height 0.3s, padding 0.3s, opacity 1s;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+}
+
+h1 {
+	font-size: 1.5rem;
+}
+
+.h1-container {
+	margin: 1rem 0rem 2rem 0rem;
+	display: flex;
+	align-items: center
+}
+
+#table-body {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	margin: 3rem;
+}
+
+.row-name {
+	text-align: left;
+	color: #0268d6;
+	padding-left: 1rem;
+	width: 200px;
+}
+
+.table-header .row-name {
+	text-align: left;
+	color: #545454;
+	padding-left: 1rem;
+}
+
+.row-name:hover {
+	cursor: pointer;
+}
+
+.row-rank {
+	text-align: center;
+	width: 60px;
+}
+
+.row-stat {
+	text-align: center;
+	width: 40px;
+}
+
+.row-team {
+	text-align: center;
+	width: 50px;
+}
+
+.table-header th {
+	border-bottom: 1px solid #cccccc;
+}
+
+.table-header .row-team-active {
+	background: #fd6a1c;
+	color: white;
+	opacity: 0.8;
+	border-bottom: 1px solid #fd6a1c;
+}
+
+.table-header .row-name-active {
+	text-align: left;
+	padding-left: 1rem;
+	background: #fd6a1c;
+	color: white;
+	opacity: 0.8;
+	border-bottom: 1px solid #fd6a1c;
+}
+
+.table-header .row-rank-active {
+	background: #fd6a1c;
+	color: white;
+	opacity: 0.8;
+	border-bottom: 1px solid #fd6a1c;
+}
+
+.table-header .row-stat-active {
+	background: #fd6a1c;
+	color: white;
+	opacity: 0.8;
+	border-bottom: 1px solid #fd6a1c;
+}
+
+.row-team-active {
+	text-align: center;
+}
+
+.table-header {
+	background-color: #f6f6f6;
+	/* border-bottom: 1px solid #e7e7e7; */
+
+	color: #545454;
+	font-size: 0.6rem;
+	height: 30px;
+	padding: 1rem;
+	opacity: 0.9;
+}
+
+.table-header:hover {
+	cursor: pointer;
+}
+
+.table-row {
+	border-bottom: 1px solid #e7e7e7;
+	height: 30px;
+	/* box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.15); */
+}
+.table-row:hover {
+	background: #fafafa;
+	/* box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.15); */
+}
+
+th {
+	font-weight: 300;
+}
+
+table {
+	background-color: white;
+	border-collapse: collapse;
+	padding: 1rem;
+	border-radius: 5px;
+	/* width: 1300px; */
+	/* box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.15); */
+	box-shadow: 0 2px 4px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+}
+
+select {
+	height: 2rem;
+	margin-left: 1rem
+}
+
+@keyframes grow {
+	from {
+		/* opacity: 0; */
+		height: 0px;
+		/* transform: scale(1, 0); */
+	}
+	to {
+		/* opacity: 1; */
+		height: 800px;
+		/* transform: scale(1, 1); */
+	}
+}

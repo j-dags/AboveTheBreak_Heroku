@@ -1,0 +1,31 @@
+#navbar {
+	font-size: 0.875rem;
+	display: flex;
+	flex-direction: row;
+	margin: 1rem 0rem;
+}
+
+.nav {
+	display: flex;
+	background: white;
+	justify-content: center;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 1;
+}
+
+.nav.add-shadow {
+	box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px;
+}
+
+a {
+	font-weight: bold;
+	margin-right: 1rem;
+	color: #475841;
+	text-decoration: none;
+}
+
+a:visited {
+	color: #fd6a1c;
+}

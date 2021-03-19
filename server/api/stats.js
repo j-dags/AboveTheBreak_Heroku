@@ -7,7 +7,7 @@ router.get('/:year', async (req, res, next) => {
 		console.log('season > ', Season)
 		const season = await Season.findOne({ where: { year: req.params.year } })
 		let stats = await season.getStatistics()
-		stats = stats.filter((player) => player.NBA_FANTASY_PTS_RANK < 150)
+		stats = stats.filter((player) => player.NBA_FANTASY_PTS_RANK <= 150)
 		stats = stats.sort(
 			(a, b) => a.NBA_FANTASY_PTS_RANK - b.NBA_FANTASY_PTS_RANK
 		)

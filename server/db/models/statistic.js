@@ -2,10 +2,10 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Statistic = db.define('statistic', {
-	seasonId: {
-		type: Sequelize.INTEGER,
-		allowNull: false,
-	},
+	// seasonId: {
+	// 	type: Sequelize.INTEGER,
+	// 	allowNull: false,
+	// },
 
 	// playerId: {
 	// 	type: Sequelize.INTEGER,

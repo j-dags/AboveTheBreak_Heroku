@@ -34,13 +34,13 @@ h1 {
 	align-items: center;
 }
 
-#table-body {
+/* #table-body {
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
 	margin: 3rem;
 	align-items: center;
-}
+} */
 
 .row-name {
 	text-align: left;
@@ -166,5 +166,15 @@ select {
 		/* opacity: 1; */
 		height: 800px;
 		/* transform: scale(1, 1); */
+	}
+}
+
+@media screen and (min-width: 600px) {
+	#table-body {
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		margin: 3rem;
+		align-items: center;
 	}
 }

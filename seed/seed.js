@@ -1,7 +1,7 @@
 'use strict'
 
-const db = require('../server/db')
-const { Player, Season, Statistic } = require('../server/db/models')
+const db = require('../server/db/db.js')
+const { Season, Statistic } = require('../server/db/models')
 // const seasons = require('./seedData')
 
 let data15 = require('./dataset_2015-16')

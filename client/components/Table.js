@@ -31,11 +31,14 @@ const Table = () => {
 		const getPlayerData = async () => {
 			// Check localStorage for prev data
 			let storage = JSON.parse(localStorage.getItem('storage'))
-
-			// If localStorage is less than 1 day old, set the state from localStorage
-			if (storage && compareDate(storage.date))
+			// If localStorage exists, is less than 1 day old, and season hasn't changed, set the state from localStorage
+			if (
+				storage &&
+				compareDate(storage.date) &&
+				storage.season === state.season
+			)
 				setState({ ...state, order: storage.data, loaded: true })
-			// If no localStorage or it is older than 1 day, fetch data from the db
+			// Otherwise fetch data from the db
 			else {
 				let { data } = await axios.get(`/api/stats/${state.season}`)
 				let storage = {
